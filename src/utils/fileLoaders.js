@@ -1,4 +1,5 @@
 import { dialog, fs } from "@tauri-apps/api"
+import { forage } from '@tauri-apps/tauri-forage'
 import XLSX from 'xlsx'
 import basePointRef from '../assets/point_ref.json'
 
@@ -18,8 +19,21 @@ function loadBasePointsReference() {
     return basePointRef
 }
 
-// function loadReferencePoints() {
+async function loadReferencePoints() {
+    // check if store has data
+    const data = await forage.getItem({key: 'points-ref'})()
+    // if not load from file
+    if(data){
+        console.log("Using store")
+        return data
+    } else {
+        console.log("Loading from base JSON")
+        // load from csv
+        const jsonData = loadBasePointsReference()
+        // set store
+        await forage.setItem({key: 'points-ref', value: jsonData})()
+        return jsonData
+    }
+}
 
-// }
-
-export { buildFileLoader, loadBasePointsReference }
+export { buildFileLoader, loadBasePointsReference, loadReferencePoints, forage }
