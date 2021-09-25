@@ -113,7 +113,6 @@ export default createStore({
 
     },
     validateTableData({commit, state }, columnToValidate){
-      commit("setIsValidating", true);
       // validate header
 
       // validate

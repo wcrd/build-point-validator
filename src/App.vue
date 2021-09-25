@@ -10,6 +10,7 @@
   import NavigationHeader from './components/NavigationHeader.vue'
   import { useStore } from 'vuex'
   import { onMounted } from 'vue'
+  import { buildFileLoader, loadBasePointsReference } from './utils/fileLoaders'
   
   export default {
     name: 'App',
@@ -18,12 +19,13 @@
       const store = useStore();
 
       const loadUserInputFile = async () => {
-        // store.commit("setIsLoading", true);
-        // const data = await window.ipcRenderer.invoke('open-build-file')
-        // store.dispatch('processTableData', data)
+        store.commit("setIsLoading", true);
+        const data = await buildFileLoader();
+        store.dispatch('processTableData', data)
       }
 
       const validate = async () => {
+        store.commit("setIsValidating", true);
         // get seletected column name
         const column = store.state.selectedColumn
         store.dispatch('validateTableData', column);
@@ -31,8 +33,8 @@
       }
 
       onMounted(async () => {
-        // const data = await window.ipcRenderer.invoke('load-base-pointsRef')
-        // store.commit('setPointsRef', data)
+        const data = loadBasePointsReference()
+        store.commit('setPointsRef', data)
       })
 
 
@@ -47,7 +49,7 @@
       }
 
 
-      window.debug = { validate, loadUserInputFile, store, getStore, clearStore, replaceStore }
+      window.debug = { validate, loadUserInputFile, store, getStore, clearStore, replaceStore, loadBasePointsReference }
       return { loadUserInputFile, validate }
     }
   }

@@ -72,10 +72,7 @@ export default {
     setOption: function(payload){
       this.$store.commit('setSelectedColumn', payload)
     },
-    logFilePath: function (e) {
-      console.log(e.target.value);
-    },
-    loadFile: async function () {
+    loadFile: function () {
       this.$emit("load-csv-data");
     },
     validate: function () {
