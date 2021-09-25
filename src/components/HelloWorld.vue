@@ -28,13 +28,27 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
   </div>
+  <div>
+    <button @click.prevent="openDialog">Load File</button>
+  </div>
 </template>
 
 <script>
+import { dialog, fs } from "@tauri-apps/api"
+import XLSX from 'xlsx'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods: {
+    openDialog: async () => {
+      const filepath = await dialog.open()
+      const fileRead = await fs.readBinaryFile(filepath)
+      const xlsxRead = XLSX.read(fileRead, { type: 'array' })
+      const data = XLSX.utils.sheet_to_json(xlsxRead.Sheets.Sheet1, {header:0, range:1})
+      console.log(data)
+    }
   }
 }
 </script>
