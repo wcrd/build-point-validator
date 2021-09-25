@@ -10,7 +10,8 @@
   import NavigationHeader from './components/NavigationHeader.vue'
   import { useStore } from 'vuex'
   import { onMounted } from 'vue'
-  import { buildFileLoader, loadReferencePoints, forage } from './utils/fileLoaders'
+  import { buildFileLoader, loadReferencePoints, updateReferencePoints, forage } from './utils/fileLoaders'
+  import { listen } from '@tauri-apps/api/event'
   
   export default {
     name: 'App',
@@ -32,24 +33,23 @@
         
       }
 
-      onMounted(async () => {
+      const setReferencePoints = async () => {
         const data = await loadReferencePoints()
         store.commit('setPointsRef', data)
+      }
+
+      onMounted(async () => {
+        setReferencePoints()
       })
 
-
-      const getStore = () => {
-        // return window.ipcRenderer.invoke('get-store')
-      }
-      const clearStore = () => {
-        // return window.ipcRenderer.invoke('delete-store')
-      }
-      const replaceStore = () => {
-        // return window.ipcRenderer.invoke('replace-store')
-      }
+      // Rust Event listener
+      listen('update-point-ref', async () => { 
+        await updateReferencePoints();
+        setReferencePoints();
+      } );
 
 
-      window.debug = { validate, loadUserInputFile, store, getStore, clearStore, replaceStore, loadReferencePoints, forage }
+      window.debug = { validate, loadUserInputFile, store, loadReferencePoints, updateReferencePoints, forage }
       return { loadUserInputFile, validate }
     }
   }
