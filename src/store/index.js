@@ -8,6 +8,8 @@ export default createStore({
     isDataLoaded: false,
     isLoading: false,
     isValidating: false,
+    isUpdatingPointsRef: false,
+    updateStatus: "",
     pointsRef: {},
     selectedColumn: '',
     optionsData: ['(No columns available)'],
@@ -40,6 +42,12 @@ export default createStore({
     },
     setDefaultColumn(state, payload){
       state.defaultColumn = payload
+    },
+    setIsUpdatingPointsRef(state, payload){
+      state.isUpdatingPointsRef = payload
+    },
+    setUpdateStatus(state, payload){
+      state.updateStatus = payload
     }
   },
   getters: {
