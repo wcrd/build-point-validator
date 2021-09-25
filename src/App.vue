@@ -10,7 +10,7 @@
   import NavigationHeader from './components/NavigationHeader.vue'
   import { useStore } from 'vuex'
   import { onMounted } from 'vue'
-  import { buildFileLoader, loadBasePointsReference } from './utils/fileLoaders'
+  import { buildFileLoader, loadReferencePoints, forage } from './utils/fileLoaders'
   
   export default {
     name: 'App',
@@ -33,7 +33,7 @@
       }
 
       onMounted(async () => {
-        const data = loadBasePointsReference()
+        const data = await loadReferencePoints()
         store.commit('setPointsRef', data)
       })
 
@@ -49,7 +49,7 @@
       }
 
 
-      window.debug = { validate, loadUserInputFile, store, getStore, clearStore, replaceStore, loadBasePointsReference }
+      window.debug = { validate, loadUserInputFile, store, getStore, clearStore, replaceStore, loadReferencePoints, forage }
       return { loadUserInputFile, validate }
     }
   }

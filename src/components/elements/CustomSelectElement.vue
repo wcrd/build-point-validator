@@ -49,8 +49,7 @@ export default {
     };
   },
   watch:{
-      default: function(newVal, oldVal){
-          console.log(newVal, oldVal)
+      default: function(newVal){
           this.selected = newVal
       }
   },
