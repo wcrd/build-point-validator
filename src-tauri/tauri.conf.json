@@ -57,6 +57,8 @@
         "title": "Build Point Validator",
         "width": 1200,
         "height": 600,
+        "minWidth": 1000,
+        "minHeight": 300,
         "resizable": true,
         "fullscreen": false,
         "maximized": true
