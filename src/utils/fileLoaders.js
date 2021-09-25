@@ -1,8 +1,9 @@
-import { dialog, fs } from "@tauri-apps/api"
+import { dialog, fs, http } from "@tauri-apps/api"
 import { forage } from '@tauri-apps/tauri-forage'
 import XLSX from 'xlsx'
 import basePointRef from '../assets/point_ref.json'
 
+// Load build export file
 async function buildFileLoader() {
     const filepath = await dialog.open()
     const fileRead = await fs.readBinaryFile(filepath)
@@ -15,10 +16,12 @@ async function buildFileLoader() {
     return data
 }
 
+// Load default point-reference
 function loadBasePointsReference() {
     return basePointRef
 }
 
+// Get latest stores point-reference and return to app
 async function loadReferencePoints() {
     // check if store has data
     const data = await forage.getItem({key: 'points-ref'})()
@@ -31,9 +34,35 @@ async function loadReferencePoints() {
         // load from csv
         const jsonData = loadBasePointsReference()
         // set store
-        await forage.setItem({key: 'points-ref', value: jsonData})()
+        await forage.setItem({key: 'points-ref', value: jsonData})();
+        await forage.setItem({key: 'origin', value: 'local'})();
         return jsonData
     }
 }
 
-export { buildFileLoader, loadBasePointsReference, loadReferencePoints, forage }
+// fetch point-reference from server
+async function fetchBasePointsRef(){
+        const resp = await http.fetch("https://building-tagging-guide.web.app/data/latest/point_ref.json")
+            .catch((e) => {
+                console.log(e)
+                return false
+            })
+        return resp.data
+}
+
+// update reference points
+async function updateReferencePoints(){
+    console.log("Querying server for new points list...")
+    const data = await fetchBasePointsRef();
+    if(data){
+        await forage.setItem({key: 'points-ref', value: data})();
+        await forage.setItem({key: 'origin', value: 'server'})();
+        await forage.setItem({key: 'last-updated', value: new Date()})();
+        console.log("Successfully updated points ref")
+    } else {
+        console.log("Error. Failed to update points.")
+    }
+
+}
+
+export { buildFileLoader, loadBasePointsReference, loadReferencePoints, updateReferencePoints, forage }
