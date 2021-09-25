@@ -43,9 +43,19 @@
       })
 
       // Rust Event listener
-      listen('update-point-ref', async () => { 
-        await updateReferencePoints();
-        setReferencePoints();
+      listen('update-point-ref', async () => {
+        store.commit('setUpdateStatus', "pending");
+        store.commit('setIsUpdatingPointsRef', true)
+        const result = await updateReferencePoints();
+        if(result){
+            store.commit('setUpdateStatus', "success")
+            await setReferencePoints();
+          } else {
+            store.commit('setUpdateStatus', 'failed')
+          }
+        setTimeout(() => {
+          store.commit('setIsUpdatingPointsRef', false)
+        }, 3000);
       } );
 
 
@@ -56,12 +66,4 @@
 </script>
 
 <style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
 </style>

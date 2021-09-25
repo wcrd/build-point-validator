@@ -59,8 +59,10 @@ async function updateReferencePoints(){
         await forage.setItem({key: 'origin', value: 'server'})();
         await forage.setItem({key: 'last-updated', value: new Date()})();
         console.log("Successfully updated points ref")
+        return true
     } else {
         console.log("Error. Failed to update points.")
+        return false
     }
 
 }

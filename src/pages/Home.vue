@@ -1,5 +1,6 @@
 <template>
   <div class="h-full w-full flex">
+    <LoadingScreen/>
     <Grid v-if="dataLoaded" />
     <InitialPage v-else />
   </div>
@@ -11,10 +12,11 @@ import Grid from "../components/Grid.vue";
 import InitialPage from "../components/InitialPage.vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
+import LoadingScreen from "../components/LoadingScreen.vue";
 
 export default {
   name: "Home",
-  components: { Grid, InitialPage },
+  components: { Grid, InitialPage, LoadingScreen },
   setup() {
     const store = useStore();
     // const dataLoaded = computed(() => {
