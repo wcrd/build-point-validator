@@ -5,7 +5,13 @@ import basePointRef from '../assets/point_ref.json'
 
 // Load build export file
 async function buildFileLoader() {
-    const filepath = await dialog.open()
+    const filepath = await dialog.open(
+        {
+        filters: [{
+            name: "Build files",
+            extensions: ["csv", "xlsx"]
+        }]
+    })
     const fileRead = await fs.readBinaryFile(filepath)
     const xlsxRead = XLSX.read(fileRead, { type: 'array' })
     const data = XLSX.utils.sheet_to_json(xlsxRead.Sheets.Sheet1, {header:0, range:1})
