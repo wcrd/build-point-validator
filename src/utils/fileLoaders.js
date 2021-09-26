@@ -12,6 +12,8 @@ async function buildFileLoader() {
             extensions: ["csv", "xlsx"]
         }]
     })
+    // if no path then cancel
+    if(!filepath){ return false }
     const fileRead = await fs.readBinaryFile(filepath)
     const xlsxRead = XLSX.read(fileRead, { type: 'array' })
     const data = XLSX.utils.sheet_to_json(xlsxRead.Sheets.Sheet1, {header:0, range:1})

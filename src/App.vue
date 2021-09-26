@@ -22,7 +22,12 @@
       const loadUserInputFile = async () => {
         store.commit("setIsLoading", true);
         const data = await buildFileLoader();
-        store.dispatch('processTableData', data)
+        if(data){
+          store.dispatch('processTableData', data)
+        } else {
+          store.commit("setIsLoading", false);
+          console.log("No path provided.")
+        }
       }
 
       const validate = async () => {
