@@ -9,7 +9,10 @@
           <button
             @click="loadFile"
             class="border border-blue-900 rounded px-5 bg-blue-400 font-medium"
-          >Load File</button>
+          >
+            <p v-if="!isLoading">Load File</p>
+            <ClipLoader v-else size="15px" />
+          </button>
         </div>
         <div>
           Column to Validate:
@@ -60,6 +63,9 @@ export default {
     },
     isValidating() {
       return this.$store.state.isValidating;
+    },
+    isLoading() {
+      return this.$store.state.isLoading;
     },
     optionsData() {
       return this.$store.state.optionsData
