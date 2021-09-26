@@ -50,7 +50,16 @@
       "active": false
     },
     "allowlist": {
-      "all": true
+      "all": false,
+      "fs": {
+        "readBinaryFile": true
+      },
+      "dialog": {
+        "open": true
+      },
+      "http": {
+        "all": true
+      }
     },
     "windows": [
       {
