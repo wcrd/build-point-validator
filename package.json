@@ -1,6 +1,6 @@
 {
-  "name": "tauri-point-validator",
-  "version": "0.1.0",
+  "name": "brick-point-validator",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
