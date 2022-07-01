@@ -1,7 +1,7 @@
 <template>
   <div class="h-full w-full flex">
     <LoadingScreen/>
-    <Grid v-if="dataLoaded" />
+    <Grid v-if="dataLoaded && !isLoading" />
     <InitialPage v-else />
   </div>
 </template>
@@ -25,8 +25,11 @@ export default {
     const dataLoaded = computed(() => {
       return store.state.isDataLoaded;
     });
+    const isLoading = computed(() => {
+      return store.state.isLoading;
+    });
 
-    return { dataLoaded };
+    return { dataLoaded, isLoading };
   },
 };
 </script>

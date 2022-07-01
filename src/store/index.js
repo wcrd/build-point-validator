@@ -10,10 +10,12 @@ export default createStore({
     isValidating: false,
     isUpdatingPointsRef: false,
     updateStatus: "",
+    loadingStatus: "",
     pointsRef: {},
     selectedColumn: '',
     optionsData: ['(No columns available)'],
-    defaultColumn: null
+    defaultColumn: null,
+    filepath: ""
   },
   mutations: {
     setTableData(state, payload) {
@@ -48,6 +50,12 @@ export default createStore({
     },
     setUpdateStatus(state, payload){
       state.updateStatus = payload
+    },
+    setLoadingStatus(state, payload){
+      state.loadingStatus = payload
+    },
+    setFilepath(state, payload){
+      state.filepath = payload
     }
   },
   getters: {

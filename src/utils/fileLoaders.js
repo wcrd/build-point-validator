@@ -13,7 +13,7 @@ async function buildFileLoader() {
         }]
     })
     // if no path then cancel
-    if(!filepath){ return false }
+    if(!filepath){ return { data: false, filepath: false } }
     const fileRead = await fs.readBinaryFile(filepath)
     const xlsxRead = XLSX.read(fileRead, { type: 'array' })
     const data = XLSX.utils.sheet_to_json(xlsxRead.Sheets.Sheet1, {header:0, range:1})
@@ -21,7 +21,7 @@ async function buildFileLoader() {
     for (let row in data){
         data[row]["::Validation::"] = ''
     }
-    return data
+    return { data, filepath }
 }
 
 // Load default point-reference

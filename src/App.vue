@@ -21,13 +21,23 @@
 
       const loadUserInputFile = async () => {
         store.commit("setIsLoading", true);
-        const data = await buildFileLoader();
-        if(data){
-          store.dispatch('processTableData', data)
-        } else {
-          store.commit("setIsLoading", false);
-          console.log("No path provided.")
+        store.commit("setLoadingStatus", "loading");
+        try {
+          const { data, filepath } = await buildFileLoader();
+          if(data){
+            store.dispatch('processTableData', data)
+            store.commit('setFilepath', filepath)
+          } else {
+            store.commit("setIsLoading", false);
+            console.log("No path provided.")
+          }
+        } catch(e) {
+          store.commit("setLoadingStatus", "failed")
+          console.log("Error reading file")
+          console.log(e)
+          setTimeout(() => store.commit("setIsLoading", false), 2500)
         }
+       
       }
 
       const validate = async () => {
