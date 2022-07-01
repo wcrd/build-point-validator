@@ -45,7 +45,12 @@
       }
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+        "https://github.com/wcrd/build-point-validator/blob/main/latest_version.json"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEQxODRGRTE0MUE2MDE3RQpSV1IrQWFaQjRVOFlEVWplNG81ZDBHdTJ3Q0FmN242bXFmd0MvZy9Ud0M2N3B2TCttZlRlU2VMago="
     },
     "allowlist": {
       "all": false,

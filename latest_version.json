@@ -1,0 +1,11 @@
+{
+    "version": "v1.2.0",
+    "notes": "TEST ONLY. Improved file loading",
+    "pub_date": "2022-07-01T15:25:00Z",
+    "platforms": {
+      "windows-x86_64": {
+        "signature": "",
+        "url": "https://github.com/wcrd/build-point-validator/releases/download/v1.1.0/build-point-validator_1.1.0_x64.msi"
+      }
+    }
+}
