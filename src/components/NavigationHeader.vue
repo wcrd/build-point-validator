@@ -1,25 +1,25 @@
 <template>
   <nav>
     <div class="flex justify-between items-center bg-blue-500 px-2 h-10">
-      <div class="flex flex-row gap-3 items-center">
+      <div class="flex flex-row gap-3 items-center flex-nowrap  overflow-hidden">
         <div>
-          <p class="text-white">Build Point Validator</p>
+          <p class="text-white whitespace-nowrap">Build Point Validator</p>
         </div>
-        <div class="ml-5 text-gray-300 italic overflow-hidden">
-          <p><span class="font-bold">file: </span><span :title="filepath">{{ getBaseName(filepath) }}</span></p>
+        <div class="ml-2 text-gray-300 italic">
+          <p class="whitespace-nowrap text-ellipsis overflow-hidden"><span class="font-bold">file: </span><span :title="filepath">{{ getBaseName(filepath) }}</span></p>
         </div>
       </div>
-      <div class="flex flex-row space-x-2 text-white">
+      <div class="flex flex-row space-x-2 text-white shrink-0 ml-2">
         <div>
           <button
             @click="loadFile"
             class="border border-blue-900 rounded px-5 bg-blue-400 font-medium"
           >
-            <p v-if="!isLoading">Load File</p>
+            <p v-if="!isLoading" class="whitespace-nowrap">Load File</p>
             <ClipLoader v-else size="15px" />
           </button>
         </div>
-        <div>
+        <div class="whitespace-nowrap">
           Column to Validate:
         </div>
         <div>
