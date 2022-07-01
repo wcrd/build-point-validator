@@ -1,8 +1,13 @@
 <template>
   <nav>
     <div class="flex justify-between items-center bg-blue-500 px-2 h-10">
-      <div>
-        <p class="text-white">Build Point Validator</p>
+      <div class="flex flex-row gap-3 items-center">
+        <div>
+          <p class="text-white">Build Point Validator</p>
+        </div>
+        <div class="ml-5 text-gray-300 italic overflow-hidden">
+          <p><span class="font-bold">file: </span><span :title="filepath">{{ getBaseName(filepath) }}</span></p>
+        </div>
       </div>
       <div class="flex flex-row space-x-2 text-white">
         <div>
@@ -48,13 +53,13 @@
 import dateGenerator from "../utils/dateGenerator";
 import ClipLoader from "./spinners/ClipLoader.vue";
 import CustomSelectElement from "./elements/CustomSelectElement.vue"
+import { getBaseName } from "../utils/helpers";
 
 export default {
   components: { ClipLoader, CustomSelectElement },
   data() {
     return {
-      filepath: "",
-      table_data: "",
+      // table_data: "",
     };
   },
   computed: {
@@ -72,6 +77,9 @@ export default {
     },
     defaultColumn(){
       return this.$store.state.defaultColumn
+    },
+    filepath(){
+      return this.$store.state.filepath || "no file loaded"
     }
   },
   methods: {
@@ -100,6 +108,7 @@ export default {
         console.log("No data available");
       }
     },
+    getBaseName: getBaseName,
   },
 };
 </script>

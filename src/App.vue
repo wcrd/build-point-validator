@@ -23,9 +23,10 @@
         store.commit("setIsLoading", true);
         store.commit("setLoadingStatus", "loading");
         try {
-          const data = await buildFileLoader();
-           if(data){
+          const { data, filepath } = await buildFileLoader();
+          if(data){
             store.dispatch('processTableData', data)
+            store.commit('setFilepath', filepath)
           } else {
             store.commit("setIsLoading", false);
             console.log("No path provided.")

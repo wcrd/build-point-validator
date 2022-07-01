@@ -14,7 +14,8 @@ export default createStore({
     pointsRef: {},
     selectedColumn: '',
     optionsData: ['(No columns available)'],
-    defaultColumn: null
+    defaultColumn: null,
+    filepath: ""
   },
   mutations: {
     setTableData(state, payload) {
@@ -52,6 +53,9 @@ export default createStore({
     },
     setLoadingStatus(state, payload){
       state.loadingStatus = payload
+    },
+    setFilepath(state, payload){
+      state.filepath = payload
     }
   },
   getters: {
