@@ -10,6 +10,7 @@ export default createStore({
     isValidating: false,
     isUpdatingPointsRef: false,
     updateStatus: "",
+    loadingStatus: "",
     pointsRef: {},
     selectedColumn: '',
     optionsData: ['(No columns available)'],
@@ -48,6 +49,9 @@ export default createStore({
     },
     setUpdateStatus(state, payload){
       state.updateStatus = payload
+    },
+    setLoadingStatus(state, payload){
+      state.loadingStatus = payload
     }
   },
   getters: {

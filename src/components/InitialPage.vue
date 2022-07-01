@@ -4,9 +4,14 @@
       <div v-if="!isLoading" class="m-auto border rounded px-4 py-2">
         <h1>Please load a Build CSV file</h1>
       </div>
-      <div v-else class="m-auto border rounded px-4 py-2">
-        <h1>Loading. Please wait...</h1>
-        <ScaleLoader />
+      <div v-else class="m-auto border rounded px-4 py-2" :class="!loadingStatus && 'border-red-500'">
+        <h1 class="mb-2">{{ loadingMessage }}</h1>
+        <div v-if="loadingStatus">
+          <ScaleLoader />
+          <div class="border rounded-md border-red-500 bg-red-500 text-white text-center mt-2 cursor-pointer" @click="forceReload">
+            <p>Cancel</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -24,8 +29,30 @@ export default {
     const isLoading = computed(() => {
       return store.state.isLoading;
     });
+    const loadingStatus = computed(() => {
+      return store.state.loadingStatus == "loading"
+    })
 
-    return { isLoading };
+    function forceReload(){
+      console.log("Reload")
+      location.reload()
+    }
+
+    const loadingMessage = computed(() => {
+            const status = store.state.loadingStatus;
+            switch(status){
+                case "loading":
+                    return "Loading. Please wait..."
+                case "success":
+                    return "Successfully loaded file."
+                case "failed":
+                    return "Error loading file. Please check file is valid Build export."
+                default:
+                    return ""
+            }
+        })
+
+    return { isLoading, forceReload, loadingMessage, loadingStatus };
   },
 };
 </script>
