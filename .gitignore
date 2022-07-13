@@ -26,3 +26,4 @@ pnpm-debug.log*
 NOTES.md
 todo.md
 .keys
+*_test.js

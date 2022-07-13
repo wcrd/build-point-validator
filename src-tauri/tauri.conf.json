@@ -61,7 +61,10 @@
         "open": true
       },
       "http": {
-        "all": true
+        "all": true,
+        "scope": [
+          "https://building-tagging-guide.web.app/data/latest/point_ref.json"
+        ]
       }
     },
     "windows": [
