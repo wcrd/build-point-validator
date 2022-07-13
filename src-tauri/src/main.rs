@@ -3,19 +3,28 @@
   windows_subsystem = "windows"
 )]
 
-extern crate dotenv;
+// extern crate dotenv;
 // use dotenv::dotenv;
 use std::env;
 use tauri::{CustomMenuItem, Menu, Submenu};
 
+const APP_VERSION: &'static str = env!("APP_VERSION");
+
 fn main() {
-  // load version numbers into process
-  dotenv::from_filename(".version").ok();
+  // // load version numbers into process
+  // dotenv::from_filename(".version").ok();
   
-  let vNum = match env::var("APP_VERSION"){ Ok(var) => var, Err(e) => "_build_error_".to_string()};
+  // let v_num = match env!("APP_VERSION"){ 
+  //   Ok(var) => var, 
+  //   Err(e) => {
+  //     println!("{:?}", e);
+  //     "_build_error_".to_string()
+  //   }
+  // };
+  // let v_num = env!("APP_VERSION");
 
   // Define menu
-  let version = CustomMenuItem::new("_version_", format!("v{}", vNum )).disabled();
+  let version = CustomMenuItem::new("_version_", format!("v{}", APP_VERSION )).disabled();
   let about = CustomMenuItem::new("_about_", "wcrd 2022").disabled();
   let load_ref = CustomMenuItem::new("update_point_ref".to_string(), "Update point reference");
   let file_menu = Submenu::new("File", Menu::new().add_item(load_ref));
