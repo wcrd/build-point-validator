@@ -11,17 +11,6 @@ use tauri::{CustomMenuItem, Menu, Submenu};
 const APP_VERSION: &'static str = env!("APP_VERSION");
 
 fn main() {
-  // // load version numbers into process
-  // dotenv::from_filename(".version").ok();
-  
-  // let v_num = match env!("APP_VERSION"){ 
-  //   Ok(var) => var, 
-  //   Err(e) => {
-  //     println!("{:?}", e);
-  //     "_build_error_".to_string()
-  //   }
-  // };
-  // let v_num = env!("APP_VERSION");
 
   // Define menu
   let version = CustomMenuItem::new("_version_", format!("v{}", APP_VERSION )).disabled();
