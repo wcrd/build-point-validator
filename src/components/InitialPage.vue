@@ -8,7 +8,7 @@
         <h1 class="mb-2">{{ loadingMessage }}</h1>
         <div v-if="loadingStatus">
           <ScaleLoader />
-          <div class="border rounded-md border-red-500 bg-red-500 text-white text-center mt-2 cursor-pointer" @click="forceReload">
+          <div class="border rounded-md border-red-500 bg-red-500 text-white text-center mt-2 cursor-pointer" @click="reloadWindow()">
             <p>Cancel</p>
           </div>
         </div>
@@ -21,6 +21,7 @@
 import ScaleLoader from "./spinners/ScaleLoader.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { reloadWindow } from "../utils/helpers";
 
 export default {
   components: { ScaleLoader },
@@ -33,10 +34,10 @@ export default {
       return store.state.loadingStatus == "loading"
     })
 
-    function forceReload(){
-      console.log("Reload")
-      location.reload()
-    }
+    // function forceReload(){
+    //   console.log("Reload")
+    //   location.reload()
+    // }
 
     const loadingMessage = computed(() => {
             const status = store.state.loadingStatus;
@@ -52,7 +53,7 @@ export default {
             }
         })
 
-    return { isLoading, forceReload, loadingMessage, loadingStatus };
+    return { isLoading, loadingMessage, loadingStatus, reloadWindow };
   },
 };
 </script>

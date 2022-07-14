@@ -29,7 +29,10 @@ fn main() {
       match event.menu_item_id() {
         "update_point_ref" => {
           event.window().emit("update-point-ref", {}).unwrap();
-        }
+        },
+        "reload-app" => {
+          event.window().emit("reload-app", {}).unwrap();
+        },
         _ => {}
       }
     })

@@ -11,6 +11,7 @@
   import { useStore } from 'vuex'
   import { onMounted } from 'vue'
   import { buildFileLoader, loadReferencePoints, updateReferencePoints, forage } from './utils/fileLoaders'
+  import { reloadWindow } from './utils/helpers'
   import { listen } from '@tauri-apps/api/event'
   
   export default {
@@ -72,6 +73,11 @@
           store.commit('setIsUpdatingPointsRef', false)
         }, 3000);
       } );
+
+      listen('reload-app', () => {
+        console.log("Reload request received...")
+        reloadWindow();
+      });
 
 
       window.debug = { validate, loadUserInputFile, store, loadReferencePoints, updateReferencePoints, forage }
