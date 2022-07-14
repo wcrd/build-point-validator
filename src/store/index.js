@@ -114,7 +114,7 @@ export default createStore({
           columnConfig.cellProperties = validatorCellProperties
           columnConfig.pin = 'colPinEnd'
           columnConfig.size = 200
-          columnConfig.filter = false
+          columnConfig.filter = true
         } else {
           options.push(name) // add to column selector dropdown
         }
