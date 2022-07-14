@@ -15,8 +15,8 @@ async function buildFileLoader() {
     // if no path then cancel
     if(!filepath){ return { data: false, filepath: false } }
     const fileRead = await fs.readBinaryFile(filepath)
-    const xlsxRead = XLSX.read(fileRead, { type: 'array' })
-    const data = XLSX.utils.sheet_to_json(xlsxRead.Sheets.Sheet1, {header:0, range:1})
+    const xlsxRead = XLSX.read(fileRead, { type: 'array', cellText:false, cellDates:true })
+    const data = XLSX.utils.sheet_to_json(xlsxRead.Sheets.Sheet1, {header:0, range:1, raw: false})
     // add empty validation column
     for (let row in data){
         data[row]["::Validation::"] = ''
