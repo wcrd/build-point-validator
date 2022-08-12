@@ -1,7 +1,7 @@
 import { dialog, fs, http } from "@tauri-apps/api"
 import { forage } from '@tauri-apps/tauri-forage'
 import XLSX from 'xlsx'
-import basePointRef from '../assets/point_ref.json'
+import basePointRef from '../assets/point_ref_v2.json'
 
 // Load build export file
 async function buildFileLoader() {
@@ -32,17 +32,22 @@ function loadBasePointsReference() {
 // Get latest stores point-reference and return to app
 async function loadReferencePoints() {
     // check if store has data
-    const data = await forage.getItem({key: 'points-ref'})()
+    const data = await forage.getItem({key: 'points-ref'})();
+    const metadata = await forage.getItem({key: 'points-ref-meta'})();
     // if not load from file
-    if(data){
+    if(!!data && !!metadata){
         console.log("Using store")
-        return data
+        return {
+            data: data,
+            metadata: metadata
+        }
     } else {
         console.log("Loading from base JSON")
         // load from csv
         const jsonData = loadBasePointsReference()
         // set store
-        await forage.setItem({key: 'points-ref', value: jsonData})();
+        await forage.setItem({key: 'points-ref', value: jsonData.data})();
+        await forage.setItem({key: "points-ref-meta", value: jsonData.metadata})();
         await forage.setItem({key: 'origin', value: 'local'})();
         return jsonData
     }
@@ -50,7 +55,7 @@ async function loadReferencePoints() {
 
 // fetch point-reference from server
 async function fetchBasePointsRef(){
-        const resp = await http.fetch("https://building-tagging-guide.web.app/data/latest/point_ref.json")
+        const resp = await http.fetch("https://building-tagging-guide.web.app/data/latest/point_ref_v2.json")
             .catch((e) => {
                 console.log(e)
                 return false
@@ -63,7 +68,8 @@ async function updateReferencePoints(){
     console.log("Querying server for new points list...")
     const data = await fetchBasePointsRef();
     if(data){
-        await forage.setItem({key: 'points-ref', value: data})();
+        await forage.setItem({key: 'points-ref', value: data.data})();
+        await forage.setItem({key: 'points-ref-meta', value: data.metadata})();
         await forage.setItem({key: 'origin', value: 'server'})();
         await forage.setItem({key: 'last-updated', value: new Date()})();
         console.log("Successfully updated points ref")
