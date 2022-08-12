@@ -13,6 +13,7 @@
   import { buildFileLoader, loadReferencePoints, updateReferencePoints, forage } from './utils/fileLoaders'
   import { reloadWindow } from './utils/helpers'
   import { listen } from '@tauri-apps/api/event'
+  import { invoke } from '@tauri-apps/api/tauri'
   
   export default {
     name: 'App',
@@ -53,6 +54,7 @@
         const data = await loadReferencePoints()
         store.commit('setPointsRef', data.data)
         store.commit('setPointsRefVersion', data.metadata.version)
+        invoke("update_menu_ref_version", {version: data.metadata.version})
       }
 
       onMounted(async () => {
@@ -63,9 +65,11 @@
       listen('update-point-ref', async () => {
         store.commit('setUpdateStatus', "pending");
         store.commit('setIsUpdatingPointsRef', true)
+        // fetch points and update data store with new data
         const result = await updateReferencePoints();
         if(result){
             store.commit('setUpdateStatus', "success")
+            // get points from data store and update into app memory 
             await setReferencePoints();
           } else {
             store.commit('setUpdateStatus', 'failed')
@@ -81,7 +85,7 @@
       });
 
 
-      window.debug = { validate, loadUserInputFile, store, loadReferencePoints, updateReferencePoints, forage }
+      window.debug = { validate, loadUserInputFile, store, loadReferencePoints, updateReferencePoints, forage, invoke }
       return { loadUserInputFile, validate }
     }
   }
