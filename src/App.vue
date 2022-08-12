@@ -51,7 +51,8 @@
 
       const setReferencePoints = async () => {
         const data = await loadReferencePoints()
-        store.commit('setPointsRef', data)
+        store.commit('setPointsRef', data.data)
+        store.commit('setPointsRefVersion', data.metadata.version)
       }
 
       onMounted(async () => {

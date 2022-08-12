@@ -63,7 +63,7 @@
       "http": {
         "all": true,
         "scope": [
-          "https://building-tagging-guide.web.app/data/latest/point_ref.json"
+          "https://building-tagging-guide.web.app/data/latest/point_ref_v2.json"
         ]
       }
     },

@@ -12,6 +12,7 @@ export default createStore({
     updateStatus: "",
     loadingStatus: "",
     pointsRef: {},
+    pointsRefVersion: '',
     selectedColumn: '',
     optionsData: ['(No columns available)'],
     defaultColumn: null,
@@ -35,6 +36,9 @@ export default createStore({
     },
     setPointsRef(state, payload){
       state.pointsRef = payload
+    },
+    setPointsRefVersion(state, payload){
+      state.pointsRefVersion = payload
     },
     setSelectedColumn(state, payload){
       state.selectedColumn = payload

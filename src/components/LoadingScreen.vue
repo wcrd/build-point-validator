@@ -5,9 +5,11 @@
       <div class="absolute inset-0">
           <div class="flex h-full">
               <div class="z-30 m-auto bg-white p-2 rounded shadow w-10/12 md:w-1/3 border border-blue-500">
-                <p>Fetching new point validation reference file...</p>
+                <p class="italic mb-2">Fetching new point validation reference file...</p>
+                <hr/>
                 <ScaleLoader class="my-10"/>
-                <p>{{ updateMessage }}</p>
+                <hr/>
+                <p class="mt-2 italic">{{ updateMessage }}</p>
               </div>
           </div>
       </div>
@@ -30,11 +32,12 @@ export default {
 
         const updateMessage = computed(() => {
             const status = store.state.updateStatus;
+            const version = store.state.pointsRefVersion;
             switch(status){
                 case "pending":
-                    return ""
+                    return "Please wait..."
                 case "success":
-                    return "Successfully updated points reference to latest version."
+                    return `Successfully updated to latest version: ${version}`
                 case "failed":
                     return "Failed to update points ref. Using existing version."
                 default:
