@@ -50,6 +50,7 @@ async fn update_menu_ref_version(window: tauri::Window, version: String) {
   let menu_handle = main_window.menu_handle();
   std::thread::spawn(move || {
     // you can also `set_selected`, `set_enabled` and `set_native_image` (macOS only).
-    menu_handle.get_item("points_ref_version").set_title(format!("Points Ref: v{}", version));
+    menu_handle.get_item("points_ref_version").set_title(format!("Points Ref: v{}", version))
+    .expect("Error updating menu");
   });
 }
